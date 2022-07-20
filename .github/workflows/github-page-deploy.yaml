@@ -12,8 +12,27 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Build
-        uses: ./.github/actions/build
+      - name: Install Rust Toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+          target: wasm32-unknown-unknown
+
+      - name: Check
+        uses: actions-rs/cargo@v1
+        with:
+          command: check
+
+      # - name: Install
+      #   uses: actions-rs/cargo@v1
+      #   with:
+      #     command: install
+
+      - name: Install
+        uses: actions-rs/cargo@v1
+        with:
+          command: build --release
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
