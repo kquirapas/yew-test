@@ -29,10 +29,11 @@ jobs:
       #   with:
       #     command: install
 
-      - name: Install
+      - name: Build Release
         uses: actions-rs/cargo@v1
         with:
-          command: build --release
+          command: build
+          args: --release
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
