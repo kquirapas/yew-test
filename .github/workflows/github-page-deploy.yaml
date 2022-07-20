@@ -12,30 +12,23 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Install Rust Toolchain
+      - name: Install Rust toolchain
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
           override: true
           target: wasm32-unknown-unknown
-
-      - name: Check
+      
+      - name: Install trunk with cargo
         uses: actions-rs/cargo@v1
         with:
-          command: check
+          command: install
+          args: --locked trunk
 
-      # - name: Install
-      #   uses: actions-rs/cargo@v1
-      #   with:
-      #     command: install
+      - name: Build release with trunk
+        uses: trunk build --release
 
-      - name: Build Release
-        uses: actions-rs/cargo@v1
-        with:
-          command: build
-          args: --release
-
-      - name: Deploy
+      - name: Deploy to gh-pages branch
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: dist # The folder the action should deploy.
